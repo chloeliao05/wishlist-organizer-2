@@ -1,0 +1,23 @@
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h1>My Wishlist</h1>
+
+  <form action="/insert_category" method="post" style="display: flex; gap: 10px; align-items: center;">
+    <input type="text" name="query_category_name" placeholder="New category name" style="font-size: 14px; padding: 5px 10px;">
+    <button style="font-size: 14px; padding: 5px 10px;">+</button>
+  </form>
+</div>
+
+<p><a href="/">← Back to Home</a></p>
+
+<% if @list_of_tags.count == 0 %>
+  <p>No categories yet. Create your first category above!</p>
+<% end %>
+
+<% @list_of_tags.each do |a_tag| %>
+  <article style="display: flex; justify-content: space-between; align-items: center;">
+    <header>
+      <a href="/categories/<%= a_tag.id %>"><%= a_tag.name %></a>
+    </header>
+    <a href="/delete_category/<%= a_tag.id %>">Delete category</a>
+  </article>
+<% end %>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Rails 8 Template" %></title>
+    <title><%= content_for(:title) || "Wishlist Organizer" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10,19 +10,73 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+
+    <!-- The official Pico CSS stylesheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.conditional.css">
+
+    <!-- The official Bootstrap utilities stylesheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/twbs/bootstrap@main/dist/css/bootstrap-utilities.css">
+
+    <!-- Our modifications to default Pico CSS styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/firstdraft/pico.firstdraft.css@latest/pico.firstdraft.css">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="pico">
+    <header>
+      <div class="container-two-thirds">
+        <nav style="display: flex; justify-content: space-between; align-items: center;">
+          <ul style="display: flex; gap: 20px; margin: 0; padding: 0; list-style: none;">
+            <li>
+              <a href="/">
+                <strong>Home</strong>
+              </a>
+            </li>
+            <% if current_user != nil %>
+              <li>
+                <a href="/categories">My Wishlist</a>
+              </li>
+              <li>
+                <a href="/all_items">All Items</a>
+              </li>
+            <% end %>
+          </ul>
+
+          <ul style="display: flex; gap: 20px; margin: 0; padding: 0; list-style: none;">
+            <% if current_user == nil %>
+              <li>
+                <a href="/users/sign_in">Log in</a>
+              </li>
+              <li>
+                <a href="/users/sign_up">Sign up</a>
+              </li>
+            <% else %>
+              <li>
+                <a href="/users/sign_out">Log out</a>
+              </li>
+            <% end %>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container-two-thirds">
+        <div class="text-success">
+          <%= notice %>
+        </div>
+
+        <div class="text-danger">
+          <%= alert %>
+        </div>
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

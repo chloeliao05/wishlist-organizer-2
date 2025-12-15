@@ -1,0 +1,51 @@
+<h1>Wishlist Organizer</h1>
+
+<article>
+  <header>
+    Add an item
+  </header>
+
+  <form action="/insert_item" method="post">
+    <div>
+      <label for="url_box">URL</label>
+      <input id="url_box" type="text" name="query_url" placeholder="Paste a link here">
+    </div>
+   
+    <div>
+      <label for="tag_select">Category</label>
+      <select id="tag_select" name="query_tag_name">
+        <option value=""></option>
+        <% @list_of_tags.each do |a_tag| %>
+          <option value="<%= a_tag.name %>"><%= a_tag.name %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div>
+      <label for="priority_box">Priority</label>
+      <select id="priority_box" name="query_priority">
+        <option value="None">None</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="buy_by_box">Buy by date</label>
+      <input id="buy_by_box" type="date" name="query_buy_by">
+    </div>
+
+    <div>
+      <label for="price_box">Price</label>
+      <input id="price_box" type="text" name="query_price" placeholder="e.g. 8.79">
+    </div>
+
+    <div>
+      <label for="notes_box">Notes</label>
+      <textarea id="notes_box" name="query_notes" placeholder="Any additional notes..."></textarea>
+    </div>
+
+    <button>Add item</button>
+  </form>
+</article>

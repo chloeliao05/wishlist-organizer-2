@@ -1,0 +1,49 @@
+<h1>All Items</h1>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+
+  <form action="/all_items" method="get" style="display: flex; align-items: center; gap: 10px;">
+    <label for="sort_by" style="font-size: 14px; white-space: nowrap;">Sort by:</label>
+    <select id="sort_by" name="sort_by" style="font-size: 14px; padding: 5px 10px;">
+      <option value="">-- Select --</option>
+      <option value="price">Price  (High to Low)</option>
+      <option value="priority">Priority (High to Low)</option>
+      <option value="buy_by">Buy By Date (Most Recent)</option>
+    </select>
+      <button style="font-size: 14px; padding: 5px 10px;">Sort</button>
+  </form>
+</div>
+
+<% if @list_of_items.count == 0 %>
+  <p>No items yet. Add some items from the home page!</p>
+<% end %>
+
+<ul>
+  <% @list_of_items.each do |an_item| %>
+    <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <% if an_item.image_url.present? %>
+          <img src="<%= an_item.image_url %>" style="width: 80px; height: auto;">
+        <% end %>
+        
+        <a href="/items/<%= an_item.id %>?from=all">
+          <% if an_item.title != nil && an_item.title != "" %>
+            <%= an_item.title %>
+          <% else %>
+            Untitled
+          <% end %>
+        </a>
+      </div>
+
+      <div style="display: flex; gap: 30px; align-items: center;">
+        <% if an_item.brand.present? %>
+          <span>Website: <%= an_item.brand %></span>
+        <% end %>
+
+        <% if an_item.buy_by.present? %>
+          <span>Buy by: <%= an_item.buy_by.to_date.strftime("%B %d, %Y") %></span>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>
